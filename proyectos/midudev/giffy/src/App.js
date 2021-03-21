@@ -1,27 +1,23 @@
-import React, {useEffect, useState} from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
+import ListOfGifs from "./components/ListOfGifs";
+import { Link, Route } from "wouter";
+import ShowGif from "./components/ShowGif";
 
-const apiURL = 'https://api.giphy.com/v1/gifs/search?api_key=n0z3y5tSmgGGa9S77WAq5cIkvZjqgZSw&q=anime&limit=10&offset=0&rating=g&lang=es'
 function App() {
-  const [gifs, setGifs] = useState([])
 
-  useEffect(function(){
-    fetch(apiURL)
-      .then(res => res.json())
-      .then(response => {
-        const {data} = response
-        const gifs = data.map(image => image.images.downsized_medium.url)
-        setGifs(gifs)
-      })
-  }, [])
   return (
     <div className="App">
       <section className="App-content">
-      {
-        gifs.map(gif => (
-          <img src={gif} />
-        ))
-      }
+        <h1>App</h1>
+        <Link to="/gif/panda">Pandas</Link>
+        <Link to="/gif/anime">Anime</Link>
+        <Link to="/gif/cars">Cars</Link>
+        <Route
+          component={ListOfGifs}
+          path="/gif/:keyword"
+        />
+        <Route path="/gif/show/:id" component={ShowGif} />
       </section>
     </div>
   );
